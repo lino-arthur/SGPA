@@ -1,0 +1,65 @@
+
+{% extends "base.html" %}
+
+{% block title %}Detalhes da Adoção | SGPA{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Detalhes da solicitação de adoção</h2>
+
+        <a href="{% url 'lista_adocoes' %}" class="btn btn-outline-secondary">
+            Voltar
+        </a>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+
+            <h4 class="mb-3">{{ adocao.nome_interessado }}</h4>
+
+            <p>
+                <strong>Animal:</strong>
+                {{ adocao.animal.nome }}
+            </p>
+
+            <p>
+                <strong>Telefone:</strong>
+                {{ adocao.telefone }}
+            </p>
+
+            <p>
+                <strong>E-mail:</strong>
+                {{ adocao.email|default:"Não informado" }}
+            </p>
+
+            <p>
+                <strong>Data da solicitação:</strong>
+                {{ adocao.data_solicitacao|date:"d/m/Y" }}
+            </p>
+
+            <p>
+                <strong>Status:</strong>
+                {{ adocao.get_status_display }}
+            </p>
+
+            <p>
+                <strong>Observações:</strong><br>
+                {% if adocao.observacoes %}
+                    {{ adocao.observacoes|linebreaks }}
+                {% else %}
+                    Não informado.
+                {% endif %}
+            </p>
+
+            <p>
+                <strong>Última atualização:</strong>
+                {{ adocao.atualizado_em|date:"d/m/Y H:i" }}
+            </p>
+
+        </div>
+    </div>
+
+</div>
+{% endblock %}

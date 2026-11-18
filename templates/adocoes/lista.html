@@ -1,0 +1,89 @@
+
+{% extends "base.html" %}
+
+{% block title %}Adoções | SGPA{% endblock %}
+
+{% block content %}
+
+<div class="dashboard-header">
+    <div>
+        <h2>Gerenciamento de Adoções</h2>
+        <p>Acompanhamento dos interessados e processos de adoção.</p>
+    </div>
+
+    <div>
+        <a href="{% url 'nova_adocao' %}" class="btn btn-primary">
+            + Nova Adoção
+        </a>
+    </div>
+</div>
+
+<div class="content-panel">
+
+    <div class="panel-header">
+        <h4>Processos de adoção</h4>
+        <span>{{ adocoes.count }} registro(s)</span>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-hover">
+
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Animal</th>
+                    <th>Interessado</th>
+                    <th>Telefone</th>
+                    <th>E-mail</th>
+                    <th>Data da solicitação</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for adocao in adocoes %}
+                <tr>
+                    <td>{{ adocao.id }}</td>
+                    <td><strong>{{ adocao.animal.nome }}</strong></td>
+                    <td>{{ adocao.nome_interessado }}</td>
+                    <td>{{ adocao.telefone }}</td>
+                    <td>{{ adocao.email|default:"Não informado" }}</td>
+                    <td>{{ adocao.data_solicitacao|date:"d/m/Y" }}</td>
+                    <td>{{ adocao.get_status_display }}</td>
+
+                    <td>
+                        <div class="d-flex gap-1">
+                            <a href="{% url 'detalhes_adocao' adocao.id %}"
+                               class="btn btn-sm btn-info">
+                                Visualizar
+                            </a>
+
+                            <a href="{% url 'editar_adocao' adocao.id %}"
+                               class="btn btn-sm btn-warning">
+                                Editar
+                            </a>
+
+                            <a href="{% url 'excluir_adocao' adocao.id %}"
+                               class="btn btn-sm btn-danger">
+                                Excluir
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+
+                {% empty %}
+                <tr>
+                    <td colspan="8" class="text-center">
+                        Nenhum processo de adoção cadastrado.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+    </div>
+
+</div>
+
+{% endblock %}

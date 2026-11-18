@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Excluir Animal | SGPA{% endblock %}
+
+{% block content %}
+
+<div class="dashboard-header">
+    <h2>Excluir Animal</h2>
+    <p>Confirme a exclusão do registro.</p>
+</div>
+
+<div class="content-panel">
+
+    <div class="alert alert-warning">
+        Tem certeza de que deseja excluir o animal
+        <strong>{{ animal.nome }}</strong>?
+        Essa ação não poderá ser desfeita.
+    </div>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <button type="submit" class="btn btn-danger">
+            Confirmar exclusão
+        </button>
+
+        <a href="{% url 'lista_animais' %}"
+           class="btn btn-outline-secondary">
+            Cancelar
+        </a>
+    </form>
+
+</div>
+
+{% endblock %}

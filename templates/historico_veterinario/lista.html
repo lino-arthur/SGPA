@@ -1,0 +1,85 @@
+
+{% extends "base.html" %}
+
+{% block title %}Histórico Veterinário | SGPA{% endblock %}
+
+{% block content %}
+
+<div class="dashboard-header">
+    <div>
+        <h2>Histórico Veterinário</h2>
+        <p>Consultas, vacinas, tratamentos e procedimentos realizados.</p>
+    </div>
+
+    <div>
+        <a href="{% url 'novo_historico' %}" class="btn btn-primary">
+            + Novo Histórico
+        </a>
+    </div>
+</div>
+
+<div class="content-panel">
+
+    <div class="panel-header">
+        <h4>Registros veterinários</h4>
+        <span>{{ historicos.count }} registro(s)</span>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-hover">
+
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Animal</th>
+                    <th>Tipo de procedimento</th>
+                    <th>Data</th>
+                    <th>Descrição</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for historico in historicos %}
+                <tr>
+                    <td>{{ historico.id }}</td>
+                    <td><strong>{{ historico.animal.nome }}</strong></td>
+                    <td>{{ historico.get_tipo_procedimento_display }}</td>
+                    <td>{{ historico.data_procedimento|date:"d/m/Y" }}</td>
+                    <td>{{ historico.descricao|truncatechars:60 }}</td>
+
+                    <td>
+                        <div class="d-flex gap-1">
+                            <a href="{% url 'detalhes_historico' historico.id %}"
+                               class="btn btn-sm btn-info">
+                                Visualizar
+                            </a>
+
+                            <a href="{% url 'editar_historico' historico.id %}"
+                               class="btn btn-sm btn-warning">
+                                Editar
+                            </a>
+
+                            <a href="{% url 'excluir_historico' historico.id %}"
+                               class="btn btn-sm btn-danger">
+                                Excluir
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="text-center">
+                        Nenhum histórico veterinário cadastrado.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+    </div>
+
+</div>
+
+{% endblock %}

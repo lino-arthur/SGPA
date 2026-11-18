@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}Animais | SGPA{% endblock %}
+
+{% block content %}
+
+<div class="dashboard-header d-flex justify-content-between align-items-center flex-wrap gap-3">
+    <div>
+        <h2>Animais cadastrados</h2>
+        <p>Gerenciamento dos animais resgatados pela organização.</p>
+    </div>
+
+    <a href="{% url 'novo_animal' %}" class="btn btn-primary">
+        + Novo Animal
+    </a>
+</div>
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+{% endif %}
+
+<div class="content-panel">
+
+    <div class="panel-header">
+        <h4>Lista de animais</h4>
+        <span>{{ animais.count }} registro(s)</span>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-hover">
+
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Espécie</th>
+                    <th>Sexo</th>
+                    <th>Idade</th>
+                    <th>Data do resgate</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for animal in animais %}
+                <tr>
+                    <td>{{ animal.id }}</td>
+                    <td><strong>{{ animal.nome }}</strong></td>
+                    <td>{{ animal.get_especie_display }}</td>
+                    <td>{{ animal.get_sexo_display }}</td>
+                    <td>{{ animal.idade_aproximada }} anos</td>
+                    <td>{{ animal.data_resgate|date:"d/m/Y" }}</td>
+                    <td>{{ animal.get_status_display }}</td>
+
+                    <td>
+                        <div class="d-flex gap-2">
+                            <a href="{% url 'detalhes_animal' animal.id %}"
+                               class="btn btn-sm btn-outline-primary">
+                                Visualizar
+                            </a>
+
+                            <a href="{% url 'editar_animal' animal.id %}"
+                               class="btn btn-sm btn-outline-warning">
+                                Editar
+                            </a>
+
+                            <a href="{% url 'excluir_animal' animal.id %}"
+                               class="btn btn-sm btn-outline-danger">
+                                Excluir
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+
+                {% empty %}
+                <tr>
+                    <td colspan="8" class="text-center">
+                        Nenhum animal cadastrado.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+    </div>
+
+</div>
+
+{% endblock %}
