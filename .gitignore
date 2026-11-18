@@ -240,3 +240,6 @@ __pycache__/
 
 # Arquivos de configuração local
 .vscode/
+
+# Arquivos estáticos coletados para produção
+/staticfiles/
