@@ -1,0 +1,49 @@
+
+{% extends "base.html" %}
+
+{% block title %}Excluir Adoção | SGPA{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+
+    <div class="mb-4">
+        <h2>Excluir solicitação de adoção</h2>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+
+            <p>Deseja realmente excluir esta solicitação?</p>
+
+            <p>
+                <strong>Interessado:</strong>
+                {{ adocao.nome_interessado }}
+            </p>
+
+            <p>
+                <strong>Animal:</strong>
+                {{ adocao.animal.nome }}
+            </p>
+
+            <p>
+                <strong>Status:</strong>
+                {{ adocao.get_status_display }}
+            </p>
+
+            <form method="post">
+                {% csrf_token %}
+
+                <button type="submit" class="btn btn-danger">
+                    Confirmar exclusão
+                </button>
+
+                <a href="{% url 'lista_adocoes' %}" class="btn btn-secondary">
+                    Cancelar
+                </a>
+            </form>
+
+        </div>
+    </div>
+
+</div>
+{% endblock %}
