@@ -1,0 +1,44 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="mb-4">
+        <h2>Excluir histórico veterinário</h2>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <p>
+                Deseja realmente excluir este registro?
+            </p>
+
+            <p>
+                <strong>Animal:</strong> {{ historico.animal.nome }}
+            </p>
+
+            <p>
+                <strong>Procedimento:</strong>
+                {{ historico.get_tipo_procedimento_display }}
+            </p>
+
+            <p>
+                <strong>Data:</strong>
+                {{ historico.data_procedimento|date:"d/m/Y" }}
+            </p>
+
+            <form method="post">
+                {% csrf_token %}
+
+                <button type="submit" class="btn btn-danger">
+                    Confirmar exclusão
+                </button>
+
+                <a href="{% url 'lista_historicos' %}" class="btn btn-secondary">
+                    Cancelar
+                </a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
